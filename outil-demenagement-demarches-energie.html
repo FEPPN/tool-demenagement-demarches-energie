@@ -1,0 +1,951 @@
+<!-- papernest - Timeline Énergie (Gaz & Électricité) - Version Simplifiée -->
+<div class="pn-energy-widget" data-default-offset-days="30">
+  <div class="pn-energy-card">
+    <div class="pn-energy-head">
+      <div class="pn-energy-brand">
+        <div class="pn-energy-left">
+          <div class="pn-energy-text">
+            <h2 class="pn-energy-title">Gérer vos contrats d'énergie</h2>
+            <p class="pn-energy-sub">Suivez les étapes clés pour l'électricité et le gaz de votre nouveau logement.</p>
+          </div>
+
+          <img
+            class="pn-energy-logo"
+            src="https://d11o8pt3cttu38.cloudfront.net/wp-content/uploads/sites/12/2026/01/logo-papernest.webp"
+            alt="papernest"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="pn-energy-controls">
+          <label class="pn-energy-pill">
+            <svg class="pn-energy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M2 6h12M5 1v2m6-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span id="pn-energy-date-label">Date d'emménagement</span>
+            <input class="pn-energy-date" type="date" aria-labelledby="pn-energy-date-label" />
+          </label>
+          <button class="pn-energy-reset" type="button" title="Réinitialiser la date">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 8a6 6 0 0 1 10.39-4.24M14 8A6 6 0 0 1 3.61 12.24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M2 4v4h4M14 12V8h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+<!-- Timeline énergétique -->
+<div class="pn-energy-timeline-wrap">
+  <div class="pn-energy-timeline" role="list" aria-label="Étapes des démarches énergie">
+    <button class="pn-energy-item is-active" type="button" role="listitem" data-id="y1">
+      <span class="pn-energy-item-title">1 an avant</span>
+      <span class="pn-energy-item-tag">Raccordement logement neuf</span>
+      <span class="pn-energy-item-status" aria-hidden="true"></span>
+    </button>
+
+    <button class="pn-energy-item" type="button" role="listitem" data-id="m2">
+      <span class="pn-energy-item-title">1 mois avant</span>
+      <span class="pn-energy-item-tag">Comparer les offres</span>
+      <span class="pn-energy-item-status" aria-hidden="true"></span>
+    </button>
+
+    <button class="pn-energy-item" type="button" role="listitem" data-id="d15">
+      <span class="pn-energy-item-title">15 jours avant</span>
+      <span class="pn-energy-item-tag">Souscrire le contrat</span>
+      <span class="pn-energy-item-status" aria-hidden="true"></span>
+    </button>
+
+    <button class="pn-energy-item" type="button" role="listitem" data-id="d0">
+      <span class="pn-energy-item-title">Jour J</span>
+      <span class="pn-energy-item-tag">Relever les index</span>
+      <span class="pn-energy-item-status" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div class="pn-energy-progress-bar" aria-hidden="true">
+    <div class="pn-energy-progress-fill"></div>
+  </div>
+</div>
+
+
+    <!-- Panneau détaillé -->
+    <div class="pn-energy-panel" role="region" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- CTA Énergie -->
+    <div class="pn-energy-cta">
+      <div class="pn-energy-cta-text">
+        <div class="pn-energy-cta-title">Besoin d'aide pour vos démarches énergie ?</div>
+        <div class="pn-energy-cta-sub">Un conseiller papernest vous accompagne gratuitement !</div>
+      </div>
+      <a class="pn-energy-cta-phone" href="tel:0970252198" aria-label="Appeler papernest au 09 70 25 21 98">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" fill="currentColor"/>
+        </svg>
+        <span>09&nbsp;70&nbsp;25&nbsp;21&nbsp;98</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+/* papernest - Timeline Énergie */
+.pn-energy-widget{
+  --pn-primary:#5A52FF;
+  --pn-primary-hover:#4D44E6;
+  --pn-secondary:#FF6B35;
+  --pn-border: rgba(0,0,0,.08);
+  --pn-shadow: 0 8px 24px rgba(0,0,0,.06);
+  --pn-shadow-hover: 0 12px 32px rgba(0,0,0,.10);
+
+  --c-y1: #5A52FF;
+  --c-m2: #FF6A9A;
+  --c-d15:#FFB21C;
+  --c-d0:#12C0B0;
+
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.pn-energy-card{
+  background:#fff;
+  border:1px solid var(--pn-border);
+  border-radius:20px;
+  box-shadow: var(--pn-shadow);
+  max-width: 980px;
+  margin: 24px auto;
+  overflow:hidden;
+  transition: box-shadow .3s ease;
+}
+
+.pn-energy-card:hover{
+  box-shadow: var(--pn-shadow-hover);
+}
+
+/* Header */
+.pn-energy-head{padding:16px 20px 12px}
+.pn-energy-brand{display:flex;flex-direction:column;gap:12px}
+
+.pn-energy-left{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  width:100%;
+}
+.pn-energy-text{flex:1;min-width:0}
+.pn-energy-title{
+  margin:0;
+  font-size:20px;
+  font-weight:850;
+  line-height:1.2;
+  letter-spacing:-.3px;
+  color:#5A52FF;
+}
+.pn-energy-sub{
+  margin:4px 0 0;
+  font-size:13.5px;
+  opacity:.72;
+  line-height:1.4;
+}
+
+.pn-energy-logo{
+  height:36px !important;
+  width:auto !important;
+  max-height:36px !important;
+  max-width:120px !important;
+  object-fit:contain;
+  display:block;
+  margin:0 0 0 8px;
+  flex-shrink:0;
+}
+
+/* Controls */
+.pn-energy-controls{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.pn-energy-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--pn-border);
+  background:rgba(90,82,255,.08);
+  padding:9px 12px;
+  border-radius:999px;
+  font-size:13.5px;
+  transition: all .2s ease;
+  cursor:pointer;
+}
+.pn-energy-pill:hover{
+  background:rgba(90,82,255,.12);
+  border-color:rgba(90,82,255,.25);
+}
+.pn-energy-pill span{opacity:.85;font-weight:500}
+
+.pn-energy-icon{
+  opacity:.6;
+  flex-shrink:0;
+}
+
+.pn-energy-date{
+  font:inherit;
+  border:0;
+  background:transparent;
+  outline:none;
+  cursor:pointer;
+  font-weight:600;
+}
+.pn-energy-date:focus{
+  outline:2px solid rgba(90,82,255,.5);
+  outline-offset:2px;
+  border-radius:6px;
+}
+
+.pn-energy-reset{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  border:1px solid var(--pn-border);
+  background:rgba(90,82,255,.08);
+  border-radius:50%;
+  cursor:pointer;
+  transition: all .2s ease;
+  color:rgba(0,0,0,.6);
+}
+.pn-energy-reset:hover{
+  background:rgba(90,82,255,.15);
+  border-color:rgba(90,82,255,.25);
+  color:rgba(0,0,0,.8);
+  transform:rotate(-45deg);
+}
+.pn-energy-reset:active{
+  transform:rotate(-45deg) scale(.95);
+}
+.pn-energy-reset:focus{
+  outline:2px solid rgba(90,82,255,.6);
+  outline-offset:2px;
+}
+
+/* Timeline avec barre de progression */
+.pn-energy-timeline-wrap{
+  position:relative;
+  padding:0 20px;
+}
+
+.pn-energy-progress-bar{
+  position:relative;
+  margin-top:10px;
+  height:4px;
+  background:rgba(0,0,0,.08);
+  border-radius:999px;
+  overflow:hidden;
+}
+
+
+.pn-energy-progress-fill{
+  height:100%;
+  background:#5A52FF;
+  border-radius:999px;
+  transition: width .4s cubic-bezier(.4,0,.2,1);
+  width:0%;
+  box-shadow: 0 0 10px rgba(90,82,255,.45);
+}
+
+
+.pn-energy-timeline{
+  display:flex;
+  gap:12px;
+  padding:16px 0 12px;
+  align-items:stretch;
+  flex-wrap:nowrap;
+  position:relative;
+}
+
+/* Items énergétiques - Style chevron/flèche */
+.pn-energy-item{
+  position:relative;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height:70px;
+  padding:14px 24px 14px 32px;
+  border:0;
+  cursor:pointer;
+  color:#fff;
+  text-align:left;
+  transition: all .25s cubic-bezier(.4,0,.2,1);
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 50%, calc(100% - 24px) 100%, 0 100%, 24px 50%);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+}
+
+.pn-energy-item::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: rgba(255,255,255,.1);
+  opacity:0;
+  transition: opacity .2s ease;
+  clip-path:inherit;
+}
+
+.pn-energy-item:hover::before{
+  opacity:1;
+}
+
+.pn-energy-item:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.pn-energy-item:focus{
+  outline:3px solid rgba(90,82,255,.6);
+  outline-offset:4px;
+}
+.pn-energy-item:focus:not(:focus-visible){outline:none}
+.pn-energy-item:focus-visible{
+  outline:3px solid rgba(90,82,255,.6);
+  outline-offset:4px;
+}
+
+.pn-energy-item:active{
+  transform:translateY(0);
+}
+
+.pn-energy-item-title{
+  display:block;
+  font-weight:900;
+  font-size:17px;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  text-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.pn-energy-item-tag{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  opacity:.85;
+  white-space:nowrap;
+}
+
+/* Status indicator */
+.pn-energy-item-status{
+  position:absolute;
+  top:8px;
+  right:30px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,.4);
+  opacity:0;
+  transform:scale(0);
+  transition: all .3s ease;
+}
+
+.pn-energy-item.is-completed .pn-energy-item-status{
+  opacity:1;
+  transform:scale(1);
+  background:rgba(255,255,255,1);
+  box-shadow: 0 0 12px rgba(255,255,255,.8), 0 0 20px rgba(255,255,255,.4);
+}
+
+/* Couleurs par étape - Solides */
+.pn-energy-item[data-id="y1"]{
+  background:var(--c-y1);
+}
+.pn-energy-item[data-id="m2"]{
+  background:var(--c-m2);
+}
+.pn-energy-item[data-id="d15"]{
+  background:var(--c-d15);
+}
+.pn-energy-item[data-id="d0"]{
+  background:var(--c-d0);
+}
+
+/* État actif */
+.pn-energy-item.is-active{
+  box-shadow: 0 8px 20px rgba(0,0,0,.2);
+  transform: translateY(-3px);
+}
+
+.pn-energy-item.is-active::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border:2.5px solid rgba(255,255,255,.8);
+  pointer-events:none;
+  clip-path:inherit;
+  animation: pulse-energy 2s ease infinite;
+}
+
+@keyframes pulse-energy{
+  0%, 100% {
+    opacity:.7;
+  }
+  50% {
+    opacity:1;
+  }
+}
+
+/* Panel */
+.pn-energy-panel{
+  margin: 12px 20px 14px;
+  padding:20px 20px;
+  border-radius:16px;
+  border:2px solid rgba(90,82,255,.15);
+  background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(90,82,255,.02) 100%);
+  animation: fadeInUp .3s ease;
+}
+
+@keyframes fadeInUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.pn-energy-panel h3{
+  margin:0 0 10px;
+  font-size:18px;
+  font-weight:850;
+  letter-spacing:-.3px;
+  color:#5A52FF;
+}
+
+.pn-energy-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  margin:0 0 16px;
+}
+
+.pn-energy-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:7px 13px;
+  border-radius:999px;
+  background:rgba(90,82,255,.12);
+  border:1.5px solid rgba(90,82,255,.25);
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.3px;
+  color:#5A52FF;
+}
+
+.pn-energy-deadline{
+  font-size:13.5px;
+  opacity:.88;
+  line-height:1.4;
+}
+
+/* Mini encadré CTA (dans la meta du panel) */
+.pn-energy-mini-cta{
+  margin-left:auto;            /* pousse à droite */
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:12px;
+  border:1.5px solid rgba(90,82,255,.25);
+  background:rgba(90,82,255,.08);
+  color: var(--pn-primary);
+  text-decoration:none;
+  font-weight:900;
+  font-size:13.5px;
+  line-height:1;
+  white-space:nowrap;
+  transition: all .2s ease;
+}
+
+.pn-energy-mini-cta:hover{
+  background:rgba(90,82,255,.12);
+  border-color:rgba(90,82,255,.35);
+  transform:translateY(-1px);
+}
+
+.pn-energy-mini-cta:focus{
+  outline:3px solid rgba(90,82,255,.5);
+  outline-offset:2px;
+}
+
+/* Sur petits écrans, on évite de forcer à droite */
+@media (max-width:640px){
+  .pn-energy-mini-cta{ margin-left:0; }
+}
+
+
+.pn-energy-panel ul{
+  margin:12px 0 0;
+  padding-left:22px;
+}
+
+.pn-energy-panel li{
+  margin:8px 0;
+  font-size:14px;
+  line-height:1.55;
+  color:rgba(0,0,0,.85);
+}
+
+.pn-energy-panel li::marker{
+  color:var(--pn-primary);
+  font-size:1.2em;
+}
+
+.pn-energy-tip{
+  margin-top:14px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:rgba(18,192,176,.08);
+  border:1.5px solid rgba(18,192,176,.2);
+  font-size:13px;
+  line-height:1.5;
+  color:rgba(0,0,0,.8);
+}
+.pn-energy-tip b{
+  font-weight:800;
+  color:#0d9688;
+}
+
+/* CTA */
+.pn-energy-cta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px 20px;
+  border-top:1px solid rgba(0,0,0,.06);
+  background: linear-gradient(135deg, rgba(90,82,255,.06) 0%, rgba(255,107,53,.06) 100%);
+  flex-wrap:wrap;
+}
+
+.pn-energy-cta-title{
+  font-weight:900;
+  font-size:15px;
+  letter-spacing:-.2px;
+  color:#5A52FF;
+}
+
+.pn-energy-cta-sub{
+  font-size:13px;
+  opacity:.75;
+  margin-top:3px;
+  line-height:1.3;
+}
+
+.pn-energy-cta-phone{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 20px;
+  border-radius:12px;
+  background: var(--pn-primary);
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
+  font-size:15px;
+  letter-spacing:.3px;
+  transition: all .2s ease;
+  box-shadow: 0 4px 16px rgba(90,82,255,.35);
+}
+
+.pn-energy-cta-phone:hover{
+  transform:translateY(-2px);
+  box-shadow: 0 6px 24px rgba(90,82,255,.45);
+  filter:brightness(1.05);
+}
+
+.pn-energy-cta-phone:active{
+  transform:translateY(0);
+}
+
+.pn-energy-cta-phone:focus{
+  outline:3px solid rgba(90,82,255,.6);
+  outline-offset:3px;
+}
+
+/* Responsive */
+@media (max-width:920px){
+  .pn-energy-timeline{
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  /* 2 cartes par ligne */
+  .pn-energy-item{
+    flex:1 1 calc(50% - 5px);
+    min-height:74px;
+    clip-path:none;
+    border-radius:14px;
+    padding:14px 14px;
+  }
+
+  .pn-energy-item-title{
+    font-size:15px;
+    white-space:normal;
+  }
+  .pn-energy-item-tag{
+    font-size:12.5px;
+    white-space:normal;
+  }
+
+  /* Sur mobile: la barre de progression n'est plus pertinente */
+  .pn-energy-progress-bar{
+    display:none;
+  }
+}
+
+@media (max-width:640px){
+  .pn-energy-head{padding:14px 16px 10px}
+  .pn-energy-timeline-wrap{padding:0 16px}
+  .pn-energy-panel{margin:10px 16px 12px;padding:16px}
+  .pn-energy-cta{padding:14px 16px}
+  .pn-energy-title{font-size:18px}
+}
+
+@media (max-width:520px){
+  /* 1 carte par ligne (lisible, pas serré) */
+  .pn-energy-item{
+    flex:1 1 100%;
+    min-height:66px;
+    padding:12px 14px;
+  }
+
+  .pn-energy-left{
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .pn-energy-logo{
+    margin:0;
+    align-self:flex-start;
+  }
+
+  /* Controls: full width et tap-friendly */
+  .pn-energy-controls{
+    width:100%;
+  }
+  .pn-energy-pill{
+    width:100%;
+    justify-content:space-between;
+  }
+  .pn-energy-reset{
+    width:44px;
+    height:44px;
+  }
+
+  /* CTA: bouton full width */
+  .pn-energy-cta-phone{
+    width:100%;
+  }
+}
+
+
+@media (prefers-reduced-motion:reduce){
+  .pn-energy-item,
+  .pn-energy-panel,
+  .pn-energy-cta-phone,
+  .pn-energy-progress-fill{transition:none}
+  .pn-energy-item.is-active::after{animation:none}
+  .pn-energy-panel{animation:none}
+}
+
+</style>
+
+<script>
+(function(){
+  "use strict";
+
+  const host = findHost();
+  if (!host) return;
+
+  const el = {
+    date: host.querySelector(".pn-energy-date"),
+    reset: host.querySelector(".pn-energy-reset"),
+    items: Array.from(host.querySelectorAll(".pn-energy-item")),
+    panel: host.querySelector(".pn-energy-panel"),
+    progressFill: host.querySelector(".pn-energy-progress-fill")
+  };
+  
+  if (!el.date || !el.items.length || !el.panel) return;
+
+  const CONFIG = {
+    locale: "fr-FR",
+    defaultOffsetDays: parseInt(host.getAttribute("data-default-offset-days") || "30", 10)
+  };
+
+  const STEPS = [
+    {
+      id:"y1",
+      label:"Raccordement électrique et gaz (logement neuf)",
+      whenLabel:"1 an avant",
+      offsetDays:365,
+      bullets:[
+        "Contactez Enedis pour l'électricité (09 69 32 15 15) et GRDF pour le gaz (09 69 36 35 34) pour demander le raccordement de votre logement neuf.",
+        "Faites contrôler vos installations pour obtenir le certificat Consuel (électricité) et l'attestation Qualigaz (gaz)."
+      ],
+      tip:"Le raccordement peut prendre 2 à 6 mois. Coût moyen : 1 800 € à 2 800 €."
+    },
+    
+    {
+      id:"m2",
+      label:"Comparer les offres d’énergie",
+      whenLabel:"1 mois avant",
+      offsetDays:30,
+      bullets:[
+        "Choisissez entre une offre à prix fixe ou indexée sur le TRV.",
+        "Comparez le prix du kWh et le prix de l’abonnement.",
+        "Vérifiez si l’option Heures Creuses est adaptée à votre usage.",
+        "Si vous le souhaitez, privilégiez une offre d’électricité verte."
+      ],
+      tip:"Faites appel à un conseiller papernest : en cinq minutes et gratuitement, il vous aide à trouver une offre d’énergie."
+    },
+
+    {
+      id:"d15",
+      label:"Souscription des contrats d'énergie",
+      whenLabel:"15 jours avant",
+      offsetDays:15,
+      bullets:[
+        "Souscrivez vos contrats d'électricité et/ou de gaz auprès du fournisseur choisi.",
+        "Indiquez votre date d'emménagement pour la mise en service.",
+        "Résiliez vos anciens contrats en mentionnant votre déménagement."
+      ],
+      tip:"Anticipez pour éviter les frais de mise en service express (environ 60 € supplémentaires)."
+    },
+    {
+      id:"d0",
+      label:"Jour du déménagement : relevé des index",
+      whenLabel:"Le jour J",
+      offsetDays:0,
+      bullets:[
+        "Relevez les index des compteurs dans votre ancien logement au départ. Prenez des photos.",
+        "Relevez les index des compteurs dans votre nouveau logement à l'arrivée.",
+        "Vérifiez que l'électricité et le gaz fonctionnent correctement."
+      ],
+      tip:"Les compteurs Linky et Gazpar transmettent les relevés automatiquement, mais vérifiez toujours les index."
+    }
+  ];
+
+  const state = { 
+    moveDate: null, 
+    activeId: "y1",
+    completedSteps: new Set()
+  };
+
+  // Helper functions
+  function findHost(){
+    const script = document.currentScript;
+    if (script && script.previousElementSibling && script.previousElementSibling.classList.contains("pn-energy-widget")) {
+      return script.previousElementSibling;
+    }
+    return document.querySelector(".pn-energy-widget");
+  }
+
+  function startOfDay(d){
+    const x = new Date(d);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+
+  function addDays(date, days){
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  function formatDate(date){
+    return new Intl.DateTimeFormat(CONFIG.locale, { 
+      day:"2-digit", 
+      month:"long", 
+      year:"numeric" 
+    }).format(date);
+  }
+
+  function diffDays(a, b){
+    const ms = startOfDay(a).getTime() - startOfDay(b).getTime();
+    return Math.round(ms / 86400000);
+  }
+
+  function relativeTextFromToday(targetDate){
+    const today = startOfDay(new Date());
+    const delta = diffDays(targetDate, today);
+    if (delta === 0) return "Aujourd'hui";
+    if (delta === 1) return "Demain";
+    if (delta > 1) return `Dans ${delta} jours`;
+    if (delta === -1) return "Hier";
+    const late = Math.abs(delta);
+    return `Il y a ${late} jours`;
+  }
+
+  function computeDeadline(step){
+    if (!state.moveDate) return null;
+    return addDays(state.moveDate, -step.offsetDays);
+  }
+
+  function escapeHtml(text){
+    const div = document.createElement("div");
+    div.textContent = String(text ?? "");
+    return div.innerHTML;
+  }
+
+  function updateProgress(){
+    if (!el.progressFill) return;
+    const progress = (state.completedSteps.size / STEPS.length) * 100;
+    el.progressFill.style.width = `${progress}%`;
+  }
+
+  function updateCompletionStatus(){
+    if (!state.moveDate) return;
+    
+    const today = startOfDay(new Date());
+    
+    STEPS.forEach(step => {
+      const deadline = computeDeadline(step);
+      const item = el.items.find(btn => btn.dataset.id === step.id);
+      
+      if (deadline && diffDays(deadline, today) < 0) {
+        state.completedSteps.add(step.id);
+        if (item) item.classList.add('is-completed');
+      } else {
+        state.completedSteps.delete(step.id);
+        if (item) item.classList.remove('is-completed');
+      }
+    });
+    
+    updateProgress();
+  }
+
+function renderPanel(){
+  const step = STEPS.find(s => s.id === state.activeId) || STEPS[0];
+  if (!step) return;
+
+  const deadline = state.moveDate ? computeDeadline(step) : null;
+
+  let deadlineHtml = `<span class="pn-energy-deadline">⚡ Sélectionnez votre date d'emménagement pour calculer vos échéances</span>`;
+
+  if (deadline){
+    const today = startOfDay(new Date());
+    const daysUntil = diffDays(deadline, today);
+
+    if (daysUntil < 0){
+      const daysLate = Math.abs(daysUntil);
+      deadlineHtml = `<span class="pn-energy-deadline">⚠️ <b>Action urgente</b> — En retard de ${daysLate} jour${daysLate > 1 ? 's' : ''}</span>`;
+    } else if (daysUntil === 0){
+      deadlineHtml = `<span class="pn-energy-deadline">⏰ <b>À faire aujourd'hui</b></span>`;
+    } else if (daysUntil <= 7){
+      deadlineHtml = `<span class="pn-energy-deadline">🔔 <b>Urgent :</b> avant le ${formatDate(deadline)}</span>`;
+    } else {
+      deadlineHtml = `<span class="pn-energy-deadline">📅 Avant le <b>${formatDate(deadline)}</b> — ${escapeHtml(relativeTextFromToday(deadline))}</span>`;
+    }
+  }
+
+  // ✅ Mini encadré cliquable uniquement sur l'étape "1 mois avant" (m2)
+  const miniCtaHtml = (step.id === "m2")
+    ? `
+      <a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" aria-label="Comparer les offres disponibles">
+        Découvrez notre comparateur
+        <span aria-hidden="true">→</span>
+      </a>
+    `
+    : "";
+
+  el.panel.innerHTML = `
+    <h3>${escapeHtml(step.label)}</h3>
+    <div class="pn-energy-meta">
+      <span class="pn-energy-badge">${escapeHtml(step.whenLabel)}</span>
+      ${deadlineHtml}
+      ${miniCtaHtml}
+    </div>
+    <ul>${step.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
+    ${step.tip ? `<div class="pn-energy-tip"><b>💡 Astuce :</b> ${escapeHtml(step.tip)}</div>` : ""}
+  `;
+}
+
+
+  function setActive(id){
+    state.activeId = id;
+    el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === id));
+    renderPanel();
+  }
+
+  function resetDate(){
+    const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
+    el.date.valueAsDate = defaultDate;
+    state.moveDate = defaultDate;
+    state.completedSteps.clear();
+    el.items.forEach(btn => btn.classList.remove('is-completed'));
+    updateProgress();
+    renderPanel();
+  }
+
+  // Event listeners
+  el.items.forEach(btn => {
+    btn.addEventListener("click", () => setActive(btn.dataset.id));
+    
+    btn.addEventListener("keydown", (e) => {
+      const keys = ["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","Home","End"];
+      if (!keys.includes(e.key)) return;
+
+      const idx = el.items.findIndex(b => b.dataset.id === state.activeId);
+      let next = idx;
+
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % el.items.length;
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + el.items.length) % el.items.length;
+      if (e.key === "Home") next = 0;
+      if (e.key === "End") next = el.items.length - 1;
+
+      e.preventDefault();
+      setActive(el.items[next].dataset.id);
+      el.items[next].focus();
+    });
+  });
+
+  el.date.addEventListener("change", () => {
+    const d = el.date.valueAsDate;
+    state.moveDate = d && !isNaN(d.getTime()) ? startOfDay(d) : null;
+    updateCompletionStatus();
+    renderPanel();
+  });
+
+  if (el.reset) {
+    el.reset.addEventListener("click", resetDate);
+  }
+
+  // Initialize
+  function init(){
+    const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
+    el.date.valueAsDate = defaultDate;
+    state.moveDate = defaultDate;
+    updateCompletionStatus();
+    setActive(state.activeId);
+  }
+
+  try { 
+    init(); 
+  } catch(e){ 
+    console.error("[pn-energy-timeline] init error", e); 
+  }
+})();
+</script>
+<!-- /papernest - Timeline Énergie -->
+
+
