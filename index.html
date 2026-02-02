@@ -868,11 +868,15 @@ function renderPanel(){
   }
 
   // ✅ Mini encadré cliquable uniquement sur l'étape "1 mois avant" (m2)
-  const miniCtaHtml = (step.id === "m2")
-    ? `
-<a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">Découvrez notre comparateur<span aria-hidden="true">→</span></a>
-
-    : "";
+  
+const miniCtaHtml = (step.id === "m2")
+  ? `
+      <a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">
+        Découvrez notre comparateur
+        <span aria-hidden="true">→</span>
+      </a>
+    `
+  : "";
 
   el.panel.innerHTML = `
     <h3>${escapeHtml(step.label)}</h3>
