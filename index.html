@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Timeline Énergie - papernest</title>
-      </head>
-    <body>
+  </head>
+  <body>
     
-<!-- papernest - Timeline Énergie (Gaz & Électricité) - Version Simplifiée -->
+<!-- papernest - Timeline Énergie (Gaz & Électricité) - Version Optimisée -->
 <div class="pn-energy-widget" data-default-offset-days="30">
   <div class="pn-energy-card">
     <div class="pn-energy-head">
@@ -27,15 +27,15 @@
         </div>
 
         <div class="pn-energy-controls">
-          <label class="pn-energy-pill">
+          <label class="pn-energy-pill" for="pn-energy-date-input">
             <svg class="pn-energy-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
               <path d="M2 6h12M5 1v2m6-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            <span id="pn-energy-date-label">Date d'emménagement</span>
-            <input class="pn-energy-date" type="date" aria-labelledby="pn-energy-date-label" />
+            <span>Date d'emménagement</span>
+            <input id="pn-energy-date-input" class="pn-energy-date" type="date" />
           </label>
-          <button class="pn-energy-reset" type="button" title="Réinitialiser la date">
+          <button class="pn-energy-reset" type="button" title="Réinitialiser la date" aria-label="Réinitialiser la date">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 8a6 6 0 0 1 10.39-4.24M14 8A6 6 0 0 1 3.61 12.24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               <path d="M2 4v4h4M14 12V8h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -47,40 +47,50 @@
 
 <!-- Timeline énergétique -->
 <div class="pn-energy-timeline-wrap">
-  <div class="pn-energy-timeline" role="list" aria-label="Étapes des démarches énergie">
-    <button class="pn-energy-item is-active" type="button" role="listitem" data-id="y1">
-      <span class="pn-energy-item-title">1 an avant</span>
-      <span class="pn-energy-item-tag">Raccordement neuf</span>
-      <span class="pn-energy-item-status" aria-hidden="true"></span>
-    </button>
+  <ul class="pn-energy-timeline" aria-label="Étapes des démarches énergie">
+    <li>
+      <button class="pn-energy-item is-active" type="button" data-id="y1">
+        <span class="pn-energy-item-title">1 an avant</span>
+        <span class="pn-energy-item-tag">Raccordement neuf</span>
+        <span class="pn-energy-item-status" aria-hidden="true"></span>
+      </button>
+    </li>
 
-    <button class="pn-energy-item" type="button" role="listitem" data-id="m2">
-      <span class="pn-energy-item-title">1 mois avant</span>
-      <span class="pn-energy-item-tag">Comparer les offres</span>
-      <span class="pn-energy-item-status" aria-hidden="true"></span>
-    </button>
+    <li>
+      <button class="pn-energy-item" type="button" data-id="m2">
+        <span class="pn-energy-item-title">1 mois avant</span>
+        <span class="pn-energy-item-tag">Comparer les offres</span>
+        <span class="pn-energy-item-status" aria-hidden="true"></span>
+      </button>
+    </li>
 
-    <button class="pn-energy-item" type="button" role="listitem" data-id="d15">
-      <span class="pn-energy-item-title">15 jours avant</span>
-      <span class="pn-energy-item-tag">Souscrire le contrat</span>
-      <span class="pn-energy-item-status" aria-hidden="true"></span>
-    </button>
+    <li>
+      <button class="pn-energy-item" type="button" data-id="d15">
+        <span class="pn-energy-item-title">15 jours avant</span>
+        <span class="pn-energy-item-tag">Souscrire le contrat</span>
+        <span class="pn-energy-item-status" aria-hidden="true"></span>
+      </button>
+    </li>
 
-    <button class="pn-energy-item" type="button" role="listitem" data-id="d0">
-      <span class="pn-energy-item-title">Jour J</span>
-      <span class="pn-energy-item-tag">Relever les index</span>
-      <span class="pn-energy-item-status" aria-hidden="true"></span>
-    </button>
-  </div>
+    <li>
+      <button class="pn-energy-item" type="button" data-id="d0">
+        <span class="pn-energy-item-title">Jour J</span>
+        <span class="pn-energy-item-tag">Relever les index</span>
+        <span class="pn-energy-item-status" aria-hidden="true"></span>
+      </button>
+    </li>
+  </ul>
 
   <div class="pn-energy-progress-bar" aria-hidden="true">
     <div class="pn-energy-progress-fill"></div>
   </div>
 </div>
 
-
     <!-- Panneau détaillé -->
     <div class="pn-energy-panel" role="region" aria-live="polite" aria-atomic="true"></div>
+    
+    <!-- Zone pour l'accordéon mobile (injecté dynamiquement) -->
+    <div class="pn-energy-accordion-container"></div>
 
     <!-- CTA Énergie -->
     <div class="pn-energy-cta">
@@ -116,6 +126,12 @@
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+}
+
+.pn-energy-widget *,
+.pn-energy-widget *::before,
+.pn-energy-widget *::after{
+  box-sizing: border-box;
 }
 
 .pn-energy-card{
@@ -161,10 +177,10 @@
 }
 
 .pn-energy-logo{
-  height:36px !important;
-  width:auto !important;
-  max-height:36px !important;
-  max-width:120px !important;
+  height:36px;
+  width:auto;
+  max-height:36px;
+  max-width:120px;
   object-fit:contain;
   display:block;
   margin:0 0 0 8px;
@@ -258,7 +274,6 @@
   overflow:hidden;
 }
 
-
 .pn-energy-progress-fill{
   height:100%;
   background:#5A52FF;
@@ -268,7 +283,6 @@
   box-shadow: 0 0 10px rgba(90,82,255,.45);
 }
 
-
 .pn-energy-timeline{
   display:flex;
   gap:12px;
@@ -276,13 +290,19 @@
   align-items:stretch;
   flex-wrap:nowrap;
   position:relative;
+  list-style:none;
+  margin:0;
+}
+
+.pn-energy-timeline li{
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 /* Items énergétiques - Style chevron/flèche */
 .pn-energy-item{
   position:relative;
-  flex: 1 1 0;
-  min-width: 0;
+  width:100%;
   min-height:70px;
   padding:14px 24px 14px 32px;
   border:0;
@@ -369,7 +389,7 @@
   box-shadow: 0 0 12px rgba(255,255,255,.8), 0 0 20px rgba(255,255,255,.4);
 }
 
-/* Couleurs par étape - Solides */
+/* Couleurs par étape */
 .pn-energy-item[data-id="y1"]{
   background:var(--c-y1);
 }
@@ -465,9 +485,9 @@
   line-height:1.4;
 }
 
-/* Mini encadré CTA (dans la meta du panel) */
+/* Mini CTA */
 .pn-energy-mini-cta{
-  margin-left:auto;            /* pousse à droite */
+  margin-left:auto;
   display:inline-flex;
   align-items:center;
   gap:8px;
@@ -495,15 +515,10 @@
   outline-offset:2px;
 }
 
-/* Sur petits écrans, on évite de forcer à droite */
-
-/* Accordéon caché par défaut (desktop/tablette) */
-.pn-energy-accordion{ display:none; }
-
-@media (max-width:640px){
-  .pn-energy-mini-cta{ margin-left:0; }
+/* Accordéon (mobile uniquement) */
+.pn-energy-accordion-container{
+  display:none;
 }
-
 
 .pn-energy-panel ul{
   margin:12px 0 0;
@@ -595,20 +610,28 @@
   outline-offset:3px;
 }
 
-/* Responsive */
+/* Responsive Tablette */
 @media (max-width:920px){
   .pn-energy-timeline{
     flex-wrap:wrap;
     gap:10px;
   }
 
-  /* 2 cartes par ligne */
-  .pn-energy-item{
+  .pn-energy-timeline li{
     flex:1 1 calc(50% - 5px);
+  }
+
+  .pn-energy-item{
     min-height:74px;
     clip-path:none;
     border-radius:14px;
     padding:14px 14px;
+  }
+  
+  .pn-energy-item::before,
+  .pn-energy-item.is-active::after{
+    clip-path:none;
+    border-radius:14px;
   }
 
   .pn-energy-item-title{
@@ -620,7 +643,6 @@
     white-space:normal;
   }
 
-  /* Sur mobile: la barre de progression n'est plus pertinente */
   .pn-energy-progress-bar{
     display:none;
   }
@@ -632,18 +654,30 @@
   .pn-energy-panel{margin:10px 16px 12px;padding:16px}
   .pn-energy-cta{padding:14px 16px}
   .pn-energy-title{font-size:18px}
+  .pn-energy-mini-cta{margin-left:0}
 }
 
+/* Responsive Mobile */
 @media (max-width:520px){
-  /* 1 carte par ligne (lisible, pas serré) */
-  .pn-energy-item{
+  .pn-energy-card{
+    margin: 16px;
+    max-width: 100%;
+  }
+
+  .pn-energy-title,
+  .pn-energy-sub{
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .pn-energy-timeline li{
     flex:1 1 100%;
+  }
+  
+  .pn-energy-item{
     min-height:66px;
     padding:12px 14px;
   }
-  
-.pn-energy-accordion{ display:block; }
-
 
   .pn-energy-left{
     flex-direction:column;
@@ -655,89 +689,46 @@
     align-self:flex-start;
   }
 
-  /* Controls: full width et tap-friendly */
   .pn-energy-controls{
     width:100%;
+    gap: 10px;
   }
+  
   .pn-energy-pill{
     width:100%;
     justify-content:space-between;
   }
+  
+  .pn-energy-pill span{
+    white-space: normal;
+  }
+
+  .pn-energy-date{
+    min-width: 0;
+    max-width: 100%;
+    text-align: right;
+  }
+  
   .pn-energy-reset{
     width:44px;
     height:44px;
   }
 
-  /* CTA: bouton full width */
   .pn-energy-cta-phone{
     width:100%;
   }
-}
 
-
-@media (prefers-reduced-motion:reduce){
-  .pn-energy-item,
-  .pn-energy-panel,
-  .pn-energy-cta-phone,
-  .pn-energy-progress-fill{transition:none}
-  .pn-energy-item.is-active::after{animation:none}
-  .pn-energy-panel{animation:none}
-}
-
-/* ✅ MOBILE ONLY – fix overflow + accordion UX */
-@media (max-width:520px){
-
-  /* Anti débordement global */
-  .pn-energy-widget,
-  .pn-energy-card{
-    max-width: 100%;
-  }
-  .pn-energy-accordion{ display:block; }
-
-  .pn-energy-widget *{
-    box-sizing: border-box;
-  }
-  .pn-energy-card{
-    margin: 16px;
-  }
-
-  /* Evite les scrolls horizontaux à cause de mots / contenus */
-  .pn-energy-title,
-  .pn-energy-sub,
-  .pn-energy-panel,
-  .pn-energy-panel *{
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-
-  /* ✅ Date: plus lisible et facile au tap */
-  .pn-energy-controls{
-    gap: 10px;
-  }
-.pn-energy-pill{
-  /* garde le reste pareil */
-  grid-template-columns: 18px 1fr minmax(110px, 40%);
-}
-
-.pn-energy-pill span{
-  min-width: 0;
-  white-space: normal; /* autorise le retour à la ligne de "Date d'emménagement" */
-}
-
-.pn-energy-date{
-  min-width: 0;       /* ✅ critique : évite le débordement */
-  width: 100%;
-  max-width: 100%;
-  text-align: right;
-}
-
-  /* ✅ On masque la timeline “4 gros boutons” */
+  /* Mode accordéon mobile */
   .pn-energy-timeline-wrap{
     display: none;
   }
 
-  /* ✅ Accordéon */
-  .pn-energy-accordion{
+  .pn-energy-panel{
+    display: none;
+  }
+
+  .pn-energy-accordion-container{
+    display: block;
     padding: 0 16px 6px;
   }
 
@@ -759,7 +750,9 @@
     justify-content: space-between;
     gap: 12px;
   }
-  .pn-energy-acc-summary::-webkit-details-marker{ display:none; }
+  .pn-energy-acc-summary::-webkit-details-marker{ 
+    display:none; 
+  }
 
   .pn-energy-acc-left{
     min-width: 0;
@@ -767,11 +760,13 @@
     flex-direction: column;
     gap: 4px;
   }
+  
   .pn-energy-acc-when{
     font-weight: 950;
     font-size: 15px;
     letter-spacing: -.2px;
   }
+  
   .pn-energy-acc-tag{
     font-weight: 800;
     font-size: 13px;
@@ -789,67 +784,94 @@
     color: rgba(0,0,0,.65);
     transition: transform .2s ease;
   }
+  
   .pn-energy-acc-item[open] .pn-energy-acc-chevron{
     transform: rotate(90deg);
   }
 
-  /* Bande colorée par étape */
-  .pn-energy-acc-item[data-id="y1"]{ border-left: 10px solid var(--c-y1); }
-  .pn-energy-acc-item[data-id="m2"]{ border-left: 10px solid var(--c-m2); }
-  .pn-energy-acc-item[data-id="d15"]{ border-left: 10px solid var(--c-d15); }
-  .pn-energy-acc-item[data-id="d0"]{ border-left: 10px solid var(--c-d0); }
+  .pn-energy-acc-item[data-id="y1"]{ 
+    border-left: 10px solid var(--c-y1); 
+  }
+  .pn-energy-acc-item[data-id="m2"]{ 
+    border-left: 10px solid var(--c-m2); 
+  }
+  .pn-energy-acc-item[data-id="d15"]{ 
+    border-left: 10px solid var(--c-d15); 
+  }
+  .pn-energy-acc-item[data-id="d0"]{ 
+    border-left: 10px solid var(--c-d0); 
+  }
 
-  /* Contenu accordéon (on réutilise le style panel) */
   .pn-energy-acc-body{
     padding: 0 14px 14px;
   }
+  
   .pn-energy-acc-body .pn-energy-panel{
     margin: 0;
     padding: 14px;
     display: block;
   }
 
-  /* On masque le panel unique en mobile (puisque chaque accordéon aura son panel) */
-  .pn-energy-panel{
-    display: none;
+  .pn-energy-mini-cta{
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
   }
-
-.pn-energy-mini-cta{
-  width: 100%;
-  max-width: 100%;
-  justify-content: center;
-  white-space: normal;          /* ✅ autorise le retour à la ligne */
-  text-align: center;
-  line-height: 1.2;
-  flex-wrap: wrap;              /* ✅ si jamais le contenu se sépare */
-  overflow-wrap: anywhere;      /* ✅ sécurité anti-débordement */
-}
 }
 
+@media (prefers-reduced-motion:reduce){
+  *,
+  *::before,
+  *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 
 <script>
 (function(){
   "use strict";
 
+  // Constants
+  const URGENT_THRESHOLD_DAYS = 7;
+  const CHAR_ENTITIES = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+
+  // Find widget host
   const host = findHost();
   if (!host) return;
 
+  // DOM elements
   const el = {
     date: host.querySelector(".pn-energy-date"),
     reset: host.querySelector(".pn-energy-reset"),
     items: Array.from(host.querySelectorAll(".pn-energy-item")),
     panel: host.querySelector(".pn-energy-panel"),
-    progressFill: host.querySelector(".pn-energy-progress-fill")
+    progressFill: host.querySelector(".pn-energy-progress-fill"),
+    accordionContainer: host.querySelector(".pn-energy-accordion-container")
   };
   
   if (!el.date || !el.items.length || !el.panel) return;
 
+  // Configuration
   const CONFIG = {
     locale: "fr-FR",
     defaultOffsetDays: parseInt(host.getAttribute("data-default-offset-days") || "30", 10)
   };
 
+  // Steps data
   const STEPS = [
     {
       id:"y1",
@@ -862,21 +884,19 @@
       ],
       tip:"Le raccordement peut prendre 2 à 6 mois. Coût moyen : 1 800 € à 2 800 €."
     },
-    
     {
       id:"m2",
-      label:"Comparer les offres d’énergie",
+      label:"Comparer les offres d'énergie",
       whenLabel:"1 mois avant",
       offsetDays:30,
       bullets:[
         "Choisissez entre une offre à prix fixe ou indexée sur le TRV.",
-        "Comparez le prix du kWh et le prix de l’abonnement.",
-        "Vérifiez si l’option Heures Creuses est adaptée à votre usage.",
-        "Si vous le souhaitez, privilégiez une offre d’électricité verte."
+        "Comparez le prix du kWh et le prix de l'abonnement.",
+        "Vérifiez si l'option Heures Creuses est adaptée à votre usage.",
+        "Si vous le souhaitez, privilégiez une offre d'électricité verte."
       ],
-      tip:"Faites appel à un conseiller papernest : en cinq minutes et gratuitement, il vous aide à trouver une offre d’énergie."
+      tip:"Faites appel à un conseiller papernest : en cinq minutes et gratuitement, il vous aide à trouver une offre d'énergie."
     },
-
     {
       id:"d15",
       label:"Souscription des contrats d'énergie",
@@ -903,25 +923,104 @@
     }
   ];
 
+  // State
   const state = { 
     moveDate: null, 
-    activeId: "y1",
+    activeId: STEPS[0].id,
     completedSteps: new Set()
   };
+
+  // Media query for mobile detection
   const MQ_MOBILE = window.matchMedia("(max-width:520px)");
+  
+  // Accordion state
   let acc = {
-    wrap: null,
+    initialized: false,
     detailsById: new Map(),
     bodyById: new Map()
   };
 
+  // Helper: Check if mobile
   function isMobile(){
-    return !!MQ_MOBILE.matches;
+    return MQ_MOBILE.matches;
   }
 
+  // Helper: Find widget host
+  function findHost(){
+    const script = document.currentScript;
+    if (script && script.previousElementSibling && 
+        script.previousElementSibling.classList.contains("pn-energy-widget")) {
+      return script.previousElementSibling;
+    }
+    return document.querySelector(".pn-energy-widget");
+  }
+
+  // Helper: Start of day
+  function startOfDay(d){
+    const x = new Date(d);
+    x.setHours(0,0,0,0);
+    return x;
+  }
+
+  // Helper: Add days
+  function addDays(date, days){
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  }
+
+  // Helper: Format date
+  function formatDate(date){
+    return new Intl.DateTimeFormat(CONFIG.locale, { 
+      day:"2-digit", 
+      month:"long", 
+      year:"numeric" 
+    }).format(date);
+  }
+
+  // Helper: Diff days
+  function diffDays(a, b){
+    const ms = startOfDay(a).getTime() - startOfDay(b).getTime();
+    return Math.round(ms / 86400000);
+  }
+
+  // Helper: Relative text from today
+  function relativeTextFromToday(targetDate){
+    const today = startOfDay(new Date());
+    const delta = diffDays(targetDate, today);
+    
+    if (delta === 0) return "Aujourd'hui";
+    if (delta === 1) return "Demain";
+    if (delta > 1) return `Dans ${delta} jours`;
+    if (delta === -1) return "Hier";
+    
+    const late = Math.abs(delta);
+    return `Il y a ${late} jours`;
+  }
+
+  // Helper: Compute deadline
+  function computeDeadline(step){
+    if (!state.moveDate) return null;
+    return addDays(state.moveDate, -step.offsetDays);
+  }
+
+  // Helper: Escape HTML (optimized)
+  function escapeHtml(text){
+    return String(text ?? "").replace(/[&<>"']/g, char => CHAR_ENTITIES[char]);
+  }
+
+  // Helper: Set date input safely
+  function setDateInputValue(date){
+    try {
+      el.date.valueAsDate = date;
+    } catch(e) {
+      el.date.value = date.toISOString().split('T')[0];
+    }
+  }
+
+  // Get step HTML content
   function getStepHtml(step){
     const deadline = state.moveDate ? computeDeadline(step) : null;
-
     let deadlineHtml = `<span class="pn-energy-deadline">⚡ Sélectionnez votre date d'emménagement pour calculer vos échéances</span>`;
 
     if (deadline){
@@ -933,7 +1032,7 @@
         deadlineHtml = `<span class="pn-energy-deadline">⚠️ <b>Action urgente</b> — En retard de ${daysLate} jour${daysLate > 1 ? 's' : ''}</span>`;
       } else if (daysUntil === 0){
         deadlineHtml = `<span class="pn-energy-deadline">⏰ <b>À faire aujourd'hui</b></span>`;
-      } else if (daysUntil <= 7){
+      } else if (daysUntil <= URGENT_THRESHOLD_DAYS){
         deadlineHtml = `<span class="pn-energy-deadline">🔔 <b>Urgent :</b> avant le ${formatDate(deadline)}</span>`;
       } else {
         deadlineHtml = `<span class="pn-energy-deadline">📅 Avant le <b>${formatDate(deadline)}</b> — ${escapeHtml(relativeTextFromToday(deadline))}</span>`;
@@ -941,9 +1040,8 @@
     }
 
     const miniCtaHtml = (step.id === "m2")
-      ? `
-        <a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">
-          Découvrez notre comparateur <span aria-hidden="true">→</span>
+      ? `<a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">
+          Comparer les offres <span aria-hidden="true">→</span>
         </a>`
       : "";
 
@@ -961,11 +1059,11 @@
     `;
   }
 
+  // Compute suggested step
   function computeSuggestedStepId(){
     if (!state.moveDate) return STEPS[0].id;
 
     const today = startOfDay(new Date());
-
     const scored = STEPS.map(step => {
       const deadline = computeDeadline(step);
       const daysUntil = diffDays(deadline, today);
@@ -979,27 +1077,24 @@
     return scored[0].id;
   }
 
+  // Ensure accordion exists
   function ensureAccordion(){
-    if (!isMobile()) return;
-    if (acc.wrap) return;
-
-    acc.wrap = document.createElement("div");
-    acc.wrap.className = "pn-energy-accordion";
-
-    const insertBefore = host.querySelector(".pn-energy-panel") || host.querySelector(".pn-energy-cta");
-    host.querySelector(".pn-energy-card").insertBefore(acc.wrap, insertBefore);
+    if (!isMobile() || acc.initialized) return;
 
     STEPS.forEach(step => {
       const details = document.createElement("details");
       details.className = "pn-energy-acc-item";
       details.dataset.id = step.id;
 
+      const itemButton = el.items.find(b => b.dataset.id === step.id);
+      const tagText = itemButton?.querySelector(".pn-energy-item-tag")?.textContent || "";
+
       const summary = document.createElement("summary");
       summary.className = "pn-energy-acc-summary";
       summary.innerHTML = `
         <div class="pn-energy-acc-left">
           <div class="pn-energy-acc-when">${escapeHtml(step.whenLabel)}</div>
-          <div class="pn-energy-acc-tag">${escapeHtml(el.items.find(b => b.dataset.id === step.id)?.querySelector(".pn-energy-item-tag")?.textContent || "")}</div>
+          <div class="pn-energy-acc-tag">${escapeHtml(tagText)}</div>
         </div>
         <div class="pn-energy-acc-chevron" aria-hidden="true">›</div>
       `;
@@ -1009,7 +1104,7 @@
 
       details.appendChild(summary);
       details.appendChild(body);
-      acc.wrap.appendChild(details);
+      el.accordionContainer.appendChild(details);
 
       acc.detailsById.set(step.id, details);
       acc.bodyById.set(step.id, body);
@@ -1024,9 +1119,12 @@
         }
       });
     });
+
+    acc.initialized = true;
   }
 
-  function openAccordionStep(id, {scroll=true} = {}){
+  // Open accordion step
+  function openAccordionStep(id, {scroll=false} = {}){
     if (!isMobile()) return;
 
     ensureAccordion();
@@ -1036,83 +1134,27 @@
 
     if (!details || !body || !step) return;
 
-    acc.detailsById.forEach((d, sid) => { d.open = (sid === id); });
+    acc.detailsById.forEach((d, sid) => { 
+      d.open = (sid === id); 
+    });
+    
     body.innerHTML = getStepHtml(step);
 
     if (scroll) {
-      details.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => {
+        details.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
     }
   }
-  
- function closeAllAccordions(){
-  if (!isMobile()) return;
-  ensureAccordion();
-  acc.detailsById.forEach(d => d.open = false);
-}
 
-
-  // Helper functions
-  function findHost(){
-    const script = document.currentScript;
-    if (script && script.previousElementSibling && script.previousElementSibling.classList.contains("pn-energy-widget")) {
-      return script.previousElementSibling;
-    }
-    return document.querySelector(".pn-energy-widget");
-  }
-
-  function startOfDay(d){
-    const x = new Date(d);
-    x.setHours(0,0,0,0);
-    return x;
-  }
-
-  function addDays(date, days){
-    const d = new Date(date);
-    d.setDate(d.getDate() + days);
-    return d;
-  }
-
-  function formatDate(date){
-    return new Intl.DateTimeFormat(CONFIG.locale, { 
-      day:"2-digit", 
-      month:"long", 
-      year:"numeric" 
-    }).format(date);
-  }
-
-  function diffDays(a, b){
-    const ms = startOfDay(a).getTime() - startOfDay(b).getTime();
-    return Math.round(ms / 86400000);
-  }
-
-  function relativeTextFromToday(targetDate){
-    const today = startOfDay(new Date());
-    const delta = diffDays(targetDate, today);
-    if (delta === 0) return "Aujourd'hui";
-    if (delta === 1) return "Demain";
-    if (delta > 1) return `Dans ${delta} jours`;
-    if (delta === -1) return "Hier";
-    const late = Math.abs(delta);
-    return `Il y a ${late} jours`;
-  }
-
-  function computeDeadline(step){
-    if (!state.moveDate) return null;
-    return addDays(state.moveDate, -step.offsetDays);
-  }
-
-  function escapeHtml(text){
-    const div = document.createElement("div");
-    div.textContent = String(text ?? "");
-    return div.innerHTML;
-  }
-
+  // Update progress bar
   function updateProgress(){
     if (!el.progressFill) return;
     const progress = (state.completedSteps.size / STEPS.length) * 100;
     el.progressFill.style.width = `${progress}%`;
   }
 
+  // Update completion status
   function updateCompletionStatus(){
     if (!state.moveDate) return;
     
@@ -1134,47 +1176,46 @@
     updateProgress();
   }
 
-function renderPanel(){
-  if (isMobile()) return; // mobile = accordéon
-  const step = STEPS.find(s => s.id === state.activeId) || STEPS[0];
-  if (!step) return;
-  el.panel.innerHTML = getStepHtml(step);
-}
-
-
-
-function setActive(id, { scroll = true } = {}){
-  state.activeId = id;
-
-  // Desktop: met en surbrillance les boutons
-  el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === id));
-
-  // Mobile: ouvre l’accordéon (scroll optionnel)
-  if (isMobile()){
-    openAccordionStep(id, { scroll });
-    return;
+  // Render panel (desktop only)
+  function renderPanel(){
+    if (isMobile()) return;
+    
+    const step = STEPS.find(s => s.id === state.activeId) || STEPS[0];
+    if (!step) return;
+    
+    el.panel.innerHTML = getStepHtml(step);
   }
 
-  renderPanel();
-}
+  // Set active step
+  function setActive(id, { scroll = false } = {}){
+    state.activeId = id;
 
+    el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === id));
 
-function resetDate(){
-  const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
-  el.date.valueAsDate = defaultDate;
-  state.moveDate = defaultDate;
+    if (isMobile()){
+      openAccordionStep(id, { scroll });
+      return;
+    }
 
-  state.completedSteps.clear();
-  el.items.forEach(btn => btn.classList.remove('is-completed'));
+    renderPanel();
+  }
 
-  updateCompletionStatus();
+  // Reset date
+  function resetDate(){
+    const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
+    setDateInputValue(defaultDate);
+    state.moveDate = defaultDate;
 
-  const suggested = computeSuggestedStepId();
-  if (isMobile()) ensureAccordion();
-setActive(suggested, { scroll: false });
-}
+    state.completedSteps.clear();
+    el.items.forEach(btn => btn.classList.remove('is-completed'));
 
-  // Event listeners
+    updateCompletionStatus();
+
+    const suggested = computeSuggestedStepId();
+    setActive(suggested, { scroll: false });
+  }
+
+  // Event: Button clicks
   el.items.forEach(btn => {
     btn.addEventListener("click", () => setActive(btn.dataset.id));
     
@@ -1185,8 +1226,12 @@ setActive(suggested, { scroll: false });
       const idx = el.items.findIndex(b => b.dataset.id === state.activeId);
       let next = idx;
 
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (idx + 1) % el.items.length;
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (idx - 1 + el.items.length) % el.items.length;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        next = (idx + 1) % el.items.length;
+      }
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        next = (idx - 1 + el.items.length) % el.items.length;
+      }
       if (e.key === "Home") next = 0;
       if (e.key === "End") next = el.items.length - 1;
 
@@ -1196,69 +1241,69 @@ setActive(suggested, { scroll: false });
     });
   });
 
-el.date.addEventListener("change", () => {
-  const d = el.date.valueAsDate;
-  state.moveDate = d && !isNaN(d.getTime()) ? startOfDay(d) : null;
+  // Event: Date change
+  el.date.addEventListener("change", () => {
+    const d = el.date.valueAsDate;
+    state.moveDate = d && !isNaN(d.getTime()) ? startOfDay(d) : null;
 
-  updateCompletionStatus();
+    updateCompletionStatus();
 
-  // ✅ auto: ouvre l’étape la plus pertinente
-  const suggested = computeSuggestedStepId();
-setActive(suggested, { scroll: false });
-});
+    const suggested = computeSuggestedStepId();
+    setActive(suggested, { scroll: false });
+  });
 
+  // Event: Reset button
   if (el.reset) {
     el.reset.addEventListener("click", resetDate);
   }
 
-  // Initialize
- 
- // ✅ Re-sync UI quand on passe mobile <-> desktop (resize / rotation)
-if (MQ_MOBILE && MQ_MOBILE.addEventListener){
+  // Event: Media query change (resize/rotation)
+  let resizeTimeout;
   MQ_MOBILE.addEventListener("change", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (isMobile()){
+        ensureAccordion();
+        // ✅ MODIFIÉ : On ne fait rien, tout reste fermé
+        state.activeId = state.activeId || computeSuggestedStepId();
+      } else {
+        el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === state.activeId));
+        renderPanel();
+      }
+    }, 100);
+  });
+
+  // Initialize
+  function init(){
+    const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
+    
+    // Set minimum date to today
+    const today = new Date().toISOString().split('T')[0];
+    el.date.min = today;
+    
+    setDateInputValue(defaultDate);
+    state.moveDate = defaultDate;
+
+    updateCompletionStatus();
+
     if (isMobile()){
       ensureAccordion();
-      closeAllAccordions(); // ✅ ne rien ouvrir en arrivant en mobile
-      state.activeId = state.activeId || computeSuggestedStepId();
-    } else {
-      // retour desktop : on cache l'accordéon (CSS) + on rerender le panel
-      el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === state.activeId));
-      renderPanel();
+      // ✅ MODIFIÉ : On ne fait rien, tout reste fermé au chargement
+      state.activeId = computeSuggestedStepId();
+      return;
     }
-  });
-}
 
-  
-function init(){
-  const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
-  el.date.valueAsDate = defaultDate;
-  state.moveDate = defaultDate;
+    setActive(state.activeId);
+  }
 
-  updateCompletionStatus();
-
-  // ✅ Mobile: crée l’accordéon + ouvre l’étape recommandée
-if (isMobile()){
-  ensureAccordion();
-  closeAllAccordions();                 // ✅ tout fermé au début
-  state.activeId = computeSuggestedStepId(); // (optionnel mais ok)
-  return;
-}
-
-
-  // Desktop normal
-  setActive(state.activeId);
-}
-
+  // Start
   try { 
     init(); 
   } catch(e){ 
-    console.error("[pn-energy-timeline] init error", e); 
+    console.error("[pn-energy-timeline] Erreur d'initialisation:", e); 
   }
 })();
 </script>
-<!-- /papernest - Timeline Énergie -->
-
-    
 
   </body>
 </html>
