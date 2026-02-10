@@ -496,6 +496,10 @@
 }
 
 /* Sur petits écrans, on évite de forcer à droite */
+
+/* Accordéon caché par défaut (desktop/tablette) */
+.pn-energy-accordion{ display:none; }
+
 @media (max-width:640px){
   .pn-energy-mini-cta{ margin-left:0; }
 }
@@ -637,6 +641,9 @@
     min-height:66px;
     padding:12px 14px;
   }
+  
+.pn-energy-accordion{ display:block; }
+
 
   .pn-energy-left{
     flex-direction:column;
@@ -675,6 +682,148 @@
   .pn-energy-progress-fill{transition:none}
   .pn-energy-item.is-active::after{animation:none}
   .pn-energy-panel{animation:none}
+}
+
+/* ✅ MOBILE ONLY – fix overflow + accordion UX */
+@media (max-width:520px){
+
+  /* Anti débordement global */
+  .pn-energy-widget,
+  .pn-energy-card{
+    max-width: 100%;
+  }
+  .pn-energy-accordion{ display:block; }
+
+  .pn-energy-widget *{
+    box-sizing: border-box;
+  }
+  .pn-energy-card{
+    margin: 16px;
+  }
+
+  /* Evite les scrolls horizontaux à cause de mots / contenus */
+  .pn-energy-title,
+  .pn-energy-sub,
+  .pn-energy-panel,
+  .pn-energy-panel *{
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ✅ Date: plus lisible et facile au tap */
+  .pn-energy-controls{
+    gap: 10px;
+  }
+.pn-energy-pill{
+  /* garde le reste pareil */
+  grid-template-columns: 18px 1fr minmax(110px, 40%);
+}
+
+.pn-energy-pill span{
+  min-width: 0;
+  white-space: normal; /* autorise le retour à la ligne de "Date d'emménagement" */
+}
+
+.pn-energy-date{
+  min-width: 0;       /* ✅ critique : évite le débordement */
+  width: 100%;
+  max-width: 100%;
+  text-align: right;
+}
+
+  /* ✅ On masque la timeline “4 gros boutons” */
+  .pn-energy-timeline-wrap{
+    display: none;
+  }
+
+  /* ✅ Accordéon */
+  .pn-energy-accordion{
+    padding: 0 16px 6px;
+  }
+
+  .pn-energy-acc-item{
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,.05);
+    margin: 10px 0;
+  }
+
+  .pn-energy-acc-summary{
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .pn-energy-acc-summary::-webkit-details-marker{ display:none; }
+
+  .pn-energy-acc-left{
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .pn-energy-acc-when{
+    font-weight: 950;
+    font-size: 15px;
+    letter-spacing: -.2px;
+  }
+  .pn-energy-acc-tag{
+    font-weight: 800;
+    font-size: 13px;
+    opacity: .75;
+  }
+
+  .pn-energy-acc-chevron{
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: rgba(90,82,255,.10);
+    color: rgba(0,0,0,.65);
+    transition: transform .2s ease;
+  }
+  .pn-energy-acc-item[open] .pn-energy-acc-chevron{
+    transform: rotate(90deg);
+  }
+
+  /* Bande colorée par étape */
+  .pn-energy-acc-item[data-id="y1"]{ border-left: 10px solid var(--c-y1); }
+  .pn-energy-acc-item[data-id="m2"]{ border-left: 10px solid var(--c-m2); }
+  .pn-energy-acc-item[data-id="d15"]{ border-left: 10px solid var(--c-d15); }
+  .pn-energy-acc-item[data-id="d0"]{ border-left: 10px solid var(--c-d0); }
+
+  /* Contenu accordéon (on réutilise le style panel) */
+  .pn-energy-acc-body{
+    padding: 0 14px 14px;
+  }
+  .pn-energy-acc-body .pn-energy-panel{
+    margin: 0;
+    padding: 14px;
+    display: block;
+  }
+
+  /* On masque le panel unique en mobile (puisque chaque accordéon aura son panel) */
+  .pn-energy-panel{
+    display: none;
+  }
+
+.pn-energy-mini-cta{
+  width: 100%;
+  max-width: 100%;
+  justify-content: center;
+  white-space: normal;          /* ✅ autorise le retour à la ligne */
+  text-align: center;
+  line-height: 1.2;
+  flex-wrap: wrap;              /* ✅ si jamais le contenu se sépare */
+  overflow-wrap: anywhere;      /* ✅ sécurité anti-débordement */
+}
 }
 
 </style>
@@ -759,6 +908,148 @@
     activeId: "y1",
     completedSteps: new Set()
   };
+  const MQ_MOBILE = window.matchMedia("(max-width:520px)");
+  let acc = {
+    wrap: null,
+    detailsById: new Map(),
+    bodyById: new Map()
+  };
+
+  function isMobile(){
+    return !!MQ_MOBILE.matches;
+  }
+
+  function getStepHtml(step){
+    const deadline = state.moveDate ? computeDeadline(step) : null;
+
+    let deadlineHtml = `<span class="pn-energy-deadline">⚡ Sélectionnez votre date d'emménagement pour calculer vos échéances</span>`;
+
+    if (deadline){
+      const today = startOfDay(new Date());
+      const daysUntil = diffDays(deadline, today);
+
+      if (daysUntil < 0){
+        const daysLate = Math.abs(daysUntil);
+        deadlineHtml = `<span class="pn-energy-deadline">⚠️ <b>Action urgente</b> — En retard de ${daysLate} jour${daysLate > 1 ? 's' : ''}</span>`;
+      } else if (daysUntil === 0){
+        deadlineHtml = `<span class="pn-energy-deadline">⏰ <b>À faire aujourd'hui</b></span>`;
+      } else if (daysUntil <= 7){
+        deadlineHtml = `<span class="pn-energy-deadline">🔔 <b>Urgent :</b> avant le ${formatDate(deadline)}</span>`;
+      } else {
+        deadlineHtml = `<span class="pn-energy-deadline">📅 Avant le <b>${formatDate(deadline)}</b> — ${escapeHtml(relativeTextFromToday(deadline))}</span>`;
+      }
+    }
+
+    const miniCtaHtml = (step.id === "m2")
+      ? `
+        <a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">
+          Découvrez notre comparateur <span aria-hidden="true">→</span>
+        </a>`
+      : "";
+
+    return `
+      <div class="pn-energy-panel" style="display:block;">
+        <h3>${escapeHtml(step.label)}</h3>
+        <div class="pn-energy-meta">
+          <span class="pn-energy-badge">${escapeHtml(step.whenLabel)}</span>
+          ${deadlineHtml}
+          ${miniCtaHtml}
+        </div>
+        <ul>${step.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
+        ${step.tip ? `<div class="pn-energy-tip"><b>💡 Astuce :</b> ${escapeHtml(step.tip)}</div>` : ""}
+      </div>
+    `;
+  }
+
+  function computeSuggestedStepId(){
+    if (!state.moveDate) return STEPS[0].id;
+
+    const today = startOfDay(new Date());
+
+    const scored = STEPS.map(step => {
+      const deadline = computeDeadline(step);
+      const daysUntil = diffDays(deadline, today);
+      return { id: step.id, daysUntil };
+    });
+
+    const upcoming = scored.filter(x => x.daysUntil >= 0).sort((a,b) => a.daysUntil - b.daysUntil);
+    if (upcoming.length) return upcoming[0].id;
+
+    scored.sort((a,b) => b.daysUntil - a.daysUntil);
+    return scored[0].id;
+  }
+
+  function ensureAccordion(){
+    if (!isMobile()) return;
+    if (acc.wrap) return;
+
+    acc.wrap = document.createElement("div");
+    acc.wrap.className = "pn-energy-accordion";
+
+    const insertBefore = host.querySelector(".pn-energy-panel") || host.querySelector(".pn-energy-cta");
+    host.querySelector(".pn-energy-card").insertBefore(acc.wrap, insertBefore);
+
+    STEPS.forEach(step => {
+      const details = document.createElement("details");
+      details.className = "pn-energy-acc-item";
+      details.dataset.id = step.id;
+
+      const summary = document.createElement("summary");
+      summary.className = "pn-energy-acc-summary";
+      summary.innerHTML = `
+        <div class="pn-energy-acc-left">
+          <div class="pn-energy-acc-when">${escapeHtml(step.whenLabel)}</div>
+          <div class="pn-energy-acc-tag">${escapeHtml(el.items.find(b => b.dataset.id === step.id)?.querySelector(".pn-energy-item-tag")?.textContent || "")}</div>
+        </div>
+        <div class="pn-energy-acc-chevron" aria-hidden="true">›</div>
+      `;
+
+      const body = document.createElement("div");
+      body.className = "pn-energy-acc-body";
+
+      details.appendChild(summary);
+      details.appendChild(body);
+      acc.wrap.appendChild(details);
+
+      acc.detailsById.set(step.id, details);
+      acc.bodyById.set(step.id, body);
+
+      details.addEventListener("toggle", () => {
+        if (details.open) {
+          acc.detailsById.forEach((d, id) => {
+            if (id !== step.id) d.open = false;
+          });
+          state.activeId = step.id;
+          body.innerHTML = getStepHtml(step);
+        }
+      });
+    });
+  }
+
+  function openAccordionStep(id, {scroll=true} = {}){
+    if (!isMobile()) return;
+
+    ensureAccordion();
+    const details = acc.detailsById.get(id);
+    const body = acc.bodyById.get(id);
+    const step = STEPS.find(s => s.id === id);
+
+    if (!details || !body || !step) return;
+
+    acc.detailsById.forEach((d, sid) => { d.open = (sid === id); });
+    body.innerHTML = getStepHtml(step);
+
+    if (scroll) {
+      details.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+  
+ function closeAllAccordions(){
+  if (!isMobile()) return;
+  ensureAccordion();
+  acc.detailsById.forEach(d => d.open = false);
+}
+
 
   // Helper functions
   function findHost(){
@@ -844,68 +1135,44 @@
   }
 
 function renderPanel(){
+  if (isMobile()) return; // mobile = accordéon
   const step = STEPS.find(s => s.id === state.activeId) || STEPS[0];
   if (!step) return;
-
-  const deadline = state.moveDate ? computeDeadline(step) : null;
-
-  let deadlineHtml = `<span class="pn-energy-deadline">⚡ Sélectionnez votre date d'emménagement pour calculer vos échéances</span>`;
-
-  if (deadline){
-    const today = startOfDay(new Date());
-    const daysUntil = diffDays(deadline, today);
-
-    if (daysUntil < 0){
-      const daysLate = Math.abs(daysUntil);
-      deadlineHtml = `<span class="pn-energy-deadline">⚠️ <b>Action urgente</b> — En retard de ${daysLate} jour${daysLate > 1 ? 's' : ''}</span>`;
-    } else if (daysUntil === 0){
-      deadlineHtml = `<span class="pn-energy-deadline">⏰ <b>À faire aujourd'hui</b></span>`;
-    } else if (daysUntil <= 7){
-      deadlineHtml = `<span class="pn-energy-deadline">🔔 <b>Urgent :</b> avant le ${formatDate(deadline)}</span>`;
-    } else {
-      deadlineHtml = `<span class="pn-energy-deadline">📅 Avant le <b>${formatDate(deadline)}</b> — ${escapeHtml(relativeTextFromToday(deadline))}</span>`;
-    }
-  }
-
-  // ✅ Mini encadré cliquable uniquement sur l'étape "1 mois avant" (m2)
-  
-const miniCtaHtml = (step.id === "m2")
-  ? `
-      <a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">
-        Découvrez notre comparateur
-        <span aria-hidden="true">→</span>
-      </a>
-    `
-  : "";
-
-  el.panel.innerHTML = `
-    <h3>${escapeHtml(step.label)}</h3>
-    <div class="pn-energy-meta">
-      <span class="pn-energy-badge">${escapeHtml(step.whenLabel)}</span>
-      ${deadlineHtml}
-      ${miniCtaHtml}
-    </div>
-    <ul>${step.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join("")}</ul>
-    ${step.tip ? `<div class="pn-energy-tip"><b>💡 Astuce :</b> ${escapeHtml(step.tip)}</div>` : ""}
-  `;
+  el.panel.innerHTML = getStepHtml(step);
 }
 
 
-  function setActive(id){
-    state.activeId = id;
-    el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === id));
-    renderPanel();
+
+function setActive(id, { scroll = true } = {}){
+  state.activeId = id;
+
+  // Desktop: met en surbrillance les boutons
+  el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === id));
+
+  // Mobile: ouvre l’accordéon (scroll optionnel)
+  if (isMobile()){
+    openAccordionStep(id, { scroll });
+    return;
   }
 
-  function resetDate(){
-    const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
-    el.date.valueAsDate = defaultDate;
-    state.moveDate = defaultDate;
-    state.completedSteps.clear();
-    el.items.forEach(btn => btn.classList.remove('is-completed'));
-    updateProgress();
-    renderPanel();
-  }
+  renderPanel();
+}
+
+
+function resetDate(){
+  const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
+  el.date.valueAsDate = defaultDate;
+  state.moveDate = defaultDate;
+
+  state.completedSteps.clear();
+  el.items.forEach(btn => btn.classList.remove('is-completed'));
+
+  updateCompletionStatus();
+
+  const suggested = computeSuggestedStepId();
+  if (isMobile()) ensureAccordion();
+setActive(suggested, { scroll: false });
+}
 
   // Event listeners
   el.items.forEach(btn => {
@@ -929,25 +1196,58 @@ const miniCtaHtml = (step.id === "m2")
     });
   });
 
-  el.date.addEventListener("change", () => {
-    const d = el.date.valueAsDate;
-    state.moveDate = d && !isNaN(d.getTime()) ? startOfDay(d) : null;
-    updateCompletionStatus();
-    renderPanel();
-  });
+el.date.addEventListener("change", () => {
+  const d = el.date.valueAsDate;
+  state.moveDate = d && !isNaN(d.getTime()) ? startOfDay(d) : null;
+
+  updateCompletionStatus();
+
+  // ✅ auto: ouvre l’étape la plus pertinente
+  const suggested = computeSuggestedStepId();
+setActive(suggested, { scroll: false });
+});
 
   if (el.reset) {
     el.reset.addEventListener("click", resetDate);
   }
 
   // Initialize
-  function init(){
-    const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
-    el.date.valueAsDate = defaultDate;
-    state.moveDate = defaultDate;
-    updateCompletionStatus();
-    setActive(state.activeId);
-  }
+ 
+ // ✅ Re-sync UI quand on passe mobile <-> desktop (resize / rotation)
+if (MQ_MOBILE && MQ_MOBILE.addEventListener){
+  MQ_MOBILE.addEventListener("change", () => {
+    if (isMobile()){
+      ensureAccordion();
+      closeAllAccordions(); // ✅ ne rien ouvrir en arrivant en mobile
+      state.activeId = state.activeId || computeSuggestedStepId();
+    } else {
+      // retour desktop : on cache l'accordéon (CSS) + on rerender le panel
+      el.items.forEach(btn => btn.classList.toggle("is-active", btn.dataset.id === state.activeId));
+      renderPanel();
+    }
+  });
+}
+
+  
+function init(){
+  const defaultDate = startOfDay(addDays(new Date(), CONFIG.defaultOffsetDays));
+  el.date.valueAsDate = defaultDate;
+  state.moveDate = defaultDate;
+
+  updateCompletionStatus();
+
+  // ✅ Mobile: crée l’accordéon + ouvre l’étape recommandée
+if (isMobile()){
+  ensureAccordion();
+  closeAllAccordions();                 // ✅ tout fermé au début
+  state.activeId = computeSuggestedStepId(); // (optionnel mais ok)
+  return;
+}
+
+
+  // Desktop normal
+  setActive(state.activeId);
+}
 
   try { 
     init(); 
@@ -962,4 +1262,3 @@ const miniCtaHtml = (step.id === "m2")
 
   </body>
 </html>
-
