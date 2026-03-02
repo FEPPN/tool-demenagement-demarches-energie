@@ -33,9 +33,10 @@
               <path d="M2 6h12M5 1v2m6-2v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
             <span>Date d'emménagement</span>
-            <input id="pn-energy-date-input" class="pn-energy-date" type="date" />
+            <input id="pn-energy-date-input" class="pn-energy-date" type="date" onfocus="trackTool('focus_date')" 
+  onchange="trackTool('change_date')" />
           </label>
-          <button class="pn-energy-reset" type="button" title="Réinitialiser la date" aria-label="Réinitialiser la date">
+          <button class="pn-energy-reset" type="button" title="Réinitialiser la date" aria-label="Réinitialiser la date" onclick="trackTool('reset_date')">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2 8a6 6 0 0 1 10.39-4.24M14 8A6 6 0 0 1 3.61 12.24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
               <path d="M2 4v4h4M14 12V8h-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,7 +50,7 @@
 <div class="pn-energy-timeline-wrap">
   <ul class="pn-energy-timeline" aria-label="Étapes des démarches énergie">
     <li>
-      <button class="pn-energy-item is-active" type="button" data-id="y1">
+      <button class="pn-energy-item is-active" type="button" data-id="y1" onclick="trackTool('click_1_an_avant')">
         <span class="pn-energy-item-title">1 an avant</span>
         <span class="pn-energy-item-tag">Raccordement neuf</span>
         <span class="pn-energy-item-status" aria-hidden="true"></span>
@@ -57,7 +58,7 @@
     </li>
 
     <li>
-      <button class="pn-energy-item" type="button" data-id="m2">
+      <button class="pn-energy-item" type="button" data-id="m2" onclick="trackTool('click_1_mois_avant')>
         <span class="pn-energy-item-title">1 mois avant</span>
         <span class="pn-energy-item-tag">Comparer les offres</span>
         <span class="pn-energy-item-status" aria-hidden="true"></span>
@@ -65,7 +66,7 @@
     </li>
 
     <li>
-      <button class="pn-energy-item" type="button" data-id="d15">
+      <button class="pn-energy-item" type="button" data-id="d15" onclick="trackTool('click_15_jours_avant')>
         <span class="pn-energy-item-title">15 jours avant</span>
         <span class="pn-energy-item-tag">Souscrire le contrat</span>
         <span class="pn-energy-item-status" aria-hidden="true"></span>
@@ -73,7 +74,7 @@
     </li>
 
     <li>
-      <button class="pn-energy-item" type="button" data-id="d0">
+      <button class="pn-energy-item" type="button" data-id="d0" onclick="trackTool('click_jour_j')>
         <span class="pn-energy-item-title">Jour J</span>
         <span class="pn-energy-item-tag">Relever les index</span>
         <span class="pn-energy-item-status" aria-hidden="true"></span>
@@ -98,7 +99,7 @@
         <div class="pn-energy-cta-title">Besoin d'aide pour vos démarches énergie ?</div>
         <div class="pn-energy-cta-sub">Un conseiller papernest vous accompagne gratuitement !</div>
       </div>
-      <a class="pn-energy-cta-phone" href="tel:0970252198" aria-label="Appeler papernest au 09 70 25 21 98">
+      <a class="pn-energy-cta-phone" href="tel:0970252198" aria-label="Appeler papernest au 09 70 25 21 98" onclick="trackTool('click_cta_phone')">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" fill="currentColor"/>
         </svg>
@@ -836,6 +837,20 @@
 </style>
 
 <script>
+  // Initialisation du tracking de visibilité
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      trackTool('tool_visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const widget = document.querySelector('.pn-energy-widget');
+  if (widget) observer.observe(widget);
+});
 (function(){
   "use strict";
 
@@ -1039,11 +1054,11 @@
       }
     }
 
-    const miniCtaHtml = (step.id === "m2")
-      ? `<a class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener" aria-label="Comparer les offres disponibles">
-          Comparer les offres <span aria-hidden="true">→</span>
-        </a>`
-      : "";
+const miniCtaHtml = (step.id === "m2")
+  ? `<a onclick="trackTool('click_cta_comparateur')" class="pn-energy-mini-cta" href="https://www.papernest.com/demarches-energie/comparateur/" target="_top" rel="noopener">
+      Comparer les offres <span aria-hidden="true">→</span>
+    </a>`
+  : "";
 
     return `
       <div class="pn-energy-panel" style="display:block;">
@@ -1303,7 +1318,17 @@
     console.error("[pn-energy-timeline] Erreur d'initialisation:", e); 
   }
 })();
+
+  function trackTool(actionName) {
+        const nom_du_tool = "tool-raccordement";
+        window.parent.postMessage({
+          'event': 'tool_interaction',
+          'tool_name': nom_du_tool, 
+          'tool_action': actionName
+        }, '*');
+      }
 </script>
 
+  
   </body>
 </html>
